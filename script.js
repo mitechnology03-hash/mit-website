@@ -458,3 +458,27 @@ document.querySelector("#year").textContent = new Date().getFullYear();
   document.documentElement.addEventListener("mouseleave", hide);
   addEventListener("blur", hide);
 })();
+
+/* ================= Team cards: tap/click to reveal social links ================= */
+(() => {
+  const cards = Array.from(document.querySelectorAll(".team-card.has-socials"));
+  if (!cards.length) return;
+  const setOpen = (card, open) => {
+    card.classList.toggle("is-open", open);
+    card.querySelector(".team-toggle").setAttribute("aria-expanded", String(open));
+  };
+  cards.forEach(card => {
+    card.querySelector(".team-toggle").addEventListener("click", () => {
+      const open = !card.classList.contains("is-open");
+      cards.forEach(c => setOpen(c, c === card && open)); // only one card open at a time
+    });
+  });
+  document.addEventListener("click", (e) => {
+    cards.forEach(c => { if (!c.contains(e.target)) setOpen(c, false); });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const openCard = cards.find(c => c.classList.contains("is-open"));
+    if (openCard) { setOpen(openCard, false); openCard.querySelector(".team-toggle").focus(); }
+  });
+})();
