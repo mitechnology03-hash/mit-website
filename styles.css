@@ -564,3 +564,84 @@ h1, h2, h3, p { margin-top: 0; }
 @media (pointer: coarse), (prefers-reduced-motion: reduce) {
   .mit-cursor-canvas { display: none !important; }
 }
+
+/* ==========================================================================
+   Additions the newer pages need (not in the original theme file)
+   ========================================================================== */
+:root { --blue-text: #2442d6; }
+.legal .updated, .legal-links a:hover, .link-button:hover, .privacy-note > span { color: var(--blue-text); }
+.link-button { padding: 8px 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: none; transition: color .2s ease; }
+.legal a { color: var(--blue-text); text-decoration: underline; text-underline-offset: 3px; }
+.footer-note a { text-decoration: underline; text-underline-offset: 3px; }
+.idea-form .check-row { margin-bottom: 14px; }
+.idea-form .check-optional { opacity: 1; }
+.form-disclaimer { margin: 6px 0 20px; color: rgba(255, 255, 255, .94); font-size: .875rem; line-height: 1.5; }
+.form-disclaimer a, .idea-form label a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.privacy-note > span { }
+
+/* AI-generated imagery label */
+.ai-label {
+  position: absolute; right: 14px; bottom: 12px; z-index: 3; margin: 0; padding: 4px 10px; border-radius: 999px;
+  background: rgba(15, 23, 42, .82); color: #fff; font-size: .75rem; font-weight: 600; letter-spacing: .02em; line-height: 1.3;
+  pointer-events: none;
+}
+.interlude, .domains-art { position: relative; }
+.hero .ai-label { right: auto; left: max(var(--gutter), calc((100% - 1200px) / 2)); bottom: 12px; }
+
+/* Placeholders the owner still has to fill in; impossible to miss on purpose */
+.todo { padding: 1px 6px; border-radius: 6px; background: #fff3c4; color: #5c4400; font-weight: 600; }
+
+/* Business details block in footers */
+.business-details { grid-column: 1 / -1; margin: 0; font-style: normal; color: var(--muted); font-size: .9375rem; line-height: 1.7; }
+.business-details strong { color: var(--ink); }
+.ai-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .875rem; }
+
+/* Cookie banner: equal-weight buttons, no pre-ticked options, no nagging */
+.cookie-banner {
+  position: fixed; left: 50%; bottom: 16px; z-index: 1200; transform: translateX(-50%);
+  width: min(920px, calc(100% - 24px)); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px;
+  padding: 18px 22px; border-radius: 20px; background: #0b1230; color: #fff;
+  border: 1px solid rgba(255, 255, 255, .22); box-shadow: 0 18px 48px rgba(15, 23, 42, .55);
+}
+.cookie-banner[hidden] { display: none; }
+.cookie-text { flex: 1 1 380px; }
+.cookie-text h2 { margin: 0 0 4px; font-size: 1.0625rem; font-weight: 680; }
+.cookie-text p { margin: 0; font-size: .9375rem; line-height: 1.5; color: #fff; }
+.cookie-text a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+.cookie-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.cookie-btn {
+  min-height: 44px; padding: 10px 20px; border-radius: 12px; border: 2px solid #fff; background: transparent; color: #fff;
+  font-weight: 650; cursor: pointer; transition: background .2s ease, color .2s ease;
+}
+.cookie-btn:hover { background: #fff; color: #0b1230; }
+html.has-cookie-banner body { padding-bottom: 150px; }
+@media (max-width: 600px) { .cookie-actions { width: 100%; } .cookie-btn { flex: 1 1 100%; } html.has-cookie-banner body { padding-bottom: 260px; } }
+@media (prefers-reduced-motion: reduce) { .cookie-btn { transition: none; } }
+
+/* Legal pages: tables and callouts */
+.legal th, .legal td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); color: var(--muted); }
+.legal th { color: var(--ink); font-weight: 650; }
+.legal .table-wrap { overflow-x: auto; }
+.legal ul { color: var(--muted); padding-left: 1.2em; }
+.legal li { margin-bottom: 6px; }
+.legal .callout { padding: 16px 18px; border-radius: 16px; box-shadow: var(--inset-sm); color: var(--ink); }
+
+/* Shimmering headline line: the light stop (#8aa0ff) was only ~2:1 on the page background, so both stops are now dark enough (>= 4.3:1) */
+
+
+/* ==========================================================================
+   FORM BACKGROUND: change it here. Set --form-bg to any colour, gradient or image.
+   Examples (uncomment one):
+   --form-bg: linear-gradient(145deg, #2442d6, #7c3aed);
+   --form-bg: linear-gradient(rgba(15,23,42,.7), rgba(15,23,42,.85)), url("assets/form-bg.jpg") center / cover;
+   If you pick a dark or image background, also uncomment the input rule below.
+   ========================================================================== */
+.idea-form {
+  --form-bg: linear-gradient(rgba(15, 23, 42, .66), rgba(15, 23, 42, .8)), url("assets/form-bg.jpg") center / cover no-repeat, #05091c;
+  background: var(--form-bg);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, .45), 0 0 40px rgba(53, 87, 244, .25);
+}
+.idea-form input, .idea-form select, .idea-form textarea { background: rgba(15, 23, 42, .62); border: 1px solid rgba(255, 255, 255, .2); box-shadow: inset 2px 2px 8px rgba(0, 0, 0, .4); }
+.idea-form input:focus, .idea-form select:focus, .idea-form textarea:focus { box-shadow: inset 2px 2px 8px rgba(0, 0, 0, .4), 0 0 0 2px #fff; }
+.idea-form .check-row input { border: 0; background: transparent; }
+.idea-form .button { box-shadow: 0 8px 22px rgba(0, 0, 0, .45); }

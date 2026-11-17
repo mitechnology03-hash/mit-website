@@ -25,6 +25,9 @@ document.addEventListener("keydown", (event) => {
 
 const form = document.querySelector("#idea-form");
 const status = document.querySelector("#form-status");
+// Bump these dates whenever terms.html / privacy.html change in a way that matters.
+const TERMS_VERSION = "2026-11-17";
+const PRIVACY_VERSION = "2026-11-17";
 const ENQUIRY_ENDPOINT = "https://script.google.com/macros/s/AKfycbw_7V31dp2nNeD16cNd_Z4h40p8EvOtJDUfvVszVhlj-_5EMID9roFLNmJKpLG0u-cl/exec";
 
 function setStatus(message, type) {
@@ -37,14 +40,14 @@ form?.addEventListener("submit", async (event) => {
 
   if (!form.checkValidity()) {
     form.reportValidity();
-    setStatus("Please complete the required fields.", "error");
+    setStatus("Almost there. A few required fields or boxes still need filling in.", "error");
     return;
   }
 
   // Honeypot: bots fill hidden fields, humans don't. Pretend success and drop it.
   if (form.elements["website"] && form.elements["website"].value) {
     form.reset();
-    setStatus("Thank you. Your project enquiry has been sent.", "success");
+    setStatus("Thanks! We got your idea.", "success");
     return;
   }
 
@@ -52,11 +55,19 @@ form?.addEventListener("submit", async (event) => {
   const originalLabel = submitButton.textContent;
   submitButton.disabled = true;
   submitButton.textContent = "Sending...";
-  setStatus("Sending your enquiry...", "success");
+  setStatus("Sending your idea...", "success");
 
+  // Record exactly what the visitor agreed to, and when (kept with the enquiry, see apps-script-Code.gs).
+  const consentLabel = form.querySelector('input[name="consent"]').closest("label");
   const data = new URLSearchParams(new FormData(form));
   data.set("submittedAt", new Date().toISOString());
-  data.set("page", window.location.href);
+  data.set("termsVersion", TERMS_VERSION);
+  data.set("privacyVersion", PRIVACY_VERSION);
+  data.set("consentText", consentLabel.textContent.replace(/\s+/g, " ").trim());
+  data.set("marketing", form.elements["marketing"].checked ? "yes" : "no");
+  data.set("ageConfirmed", form.elements["age_confirm"].checked ? "yes" : "no");
+  data.delete("age_confirm");
+  // Deliberately not sent: page URL, user agent, IP address, or anything else we do not need.
 
   try {
     // no-cors: Apps Script web apps redirect and don't send CORS headers.
@@ -68,9 +79,9 @@ form?.addEventListener("submit", async (event) => {
       body: data.toString()
     });
     form.reset();
-    setStatus("Thank you. Your project enquiry has been sent. We will contact you soon.", "success");
+    setStatus("Thanks! We got your idea and will get back to you soon.", "success");
   } catch (error) {
-    setStatus("Could not send your enquiry. Please check your connection and try again.", "error");
+    setStatus("That didn't go through. Check your connection and try again?", "error");
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = originalLabel;
