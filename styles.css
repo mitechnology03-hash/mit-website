@@ -548,23 +548,6 @@ h1, h2, h3, p { margin-top: 0; }
   .team-socials, .social-btn, .team-hint { transition: none; }
 }
 
-/* ============ Custom cursor: "circuit node" (drawn on a canvas by script.js) ============ */
-@media (pointer: fine) {
-  html.has-custom-cursor body,
-  html.has-custom-cursor a,
-  html.has-custom-cursor button,
-  html.has-custom-cursor input,
-  html.has-custom-cursor textarea,
-  html.has-custom-cursor select,
-  html.has-custom-cursor label,
-  html.has-custom-cursor summary,
-  html.has-custom-cursor [role="button"] { cursor: none; }
-  .mit-cursor-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; }
-}
-@media (pointer: coarse), (prefers-reduced-motion: reduce) {
-  .mit-cursor-canvas { display: none !important; }
-}
-
 /* ==========================================================================
    Additions the newer pages need (not in the original theme file)
    ========================================================================== */
